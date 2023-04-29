@@ -1,0 +1,19 @@
+{
+  "name": "ld53_amazing_delivery_boy",
+  "version": "0.0.1",
+  "description": "A Small Game About a Delivery Boy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/fredsson/amazing-delivery-boy.git"
+  },
+  "author": "Fredrik Andersson <fredrik.ks.andersson@gmail.com>",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/fredsson/amazing-delivery-boy/issues"
+  },
+  "homepage": "https://github.com/fredsson/amazing-delivery-boy#readme"
+}

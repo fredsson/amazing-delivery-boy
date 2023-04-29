@@ -57,8 +57,8 @@ export class PlayerView {
       return;
     }
 
+    this.currentAnimation = animationToChangeTo;
     if (animationToChangeTo && this.animations) {
-      this.currentAnimation = animationToChangeTo;
       sprite.textures = this.animations[animationToChangeTo];
       sprite.play();
     } else if (!animationToChangeTo) {

@@ -16,6 +16,7 @@ function main() {
 
   watchFile('index.html', abortController.signal);
   watchFile('styles.css', abortController.signal);
+  watchFile('assets', abortController.signal);
 
   serverChild.stdout?.on('data', console.log);
   esbuildChild.stdout?.on('data', console.log);

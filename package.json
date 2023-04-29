@@ -4,6 +4,8 @@
   "description": "A Small Game About a Delivery Boy",
   "main": "index.js",
   "scripts": {
+    "dev": "esbuild src/main.ts index.html --bundle --outdir=dist --watch",
+    "build": "esbuild src/main.ts --bundle --outdir=dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/fredsson/amazing-delivery-boy/issues"
   },
-  "homepage": "https://github.com/fredsson/amazing-delivery-boy#readme"
+  "homepage": "https://github.com/fredsson/amazing-delivery-boy#readme",
+  "devDependencies": {
+    "esbuild": "^0.17.18",
+    "http-server": "^14.1.1",
+    "typescript": "^5.0.4"
+  }
 }

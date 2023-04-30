@@ -9,7 +9,7 @@ function watchFile(fileName, signal) {
 }
 
 function main() {
-  const serverChild = exec('npx http-server dist -c-1');
+  const serverChild = exec('npx http-server dist -c-1 -p4200');
   const esbuildChild = exec('npx esbuild src/main.ts --bundle --outdir=dist --watch');
 
   const abortController = new AbortController();

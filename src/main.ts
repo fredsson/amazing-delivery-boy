@@ -10,7 +10,7 @@ async function main() {
     return;
   }
   const app = new Application({ backgroundColor: '#1099bb' });
-  document.body.appendChild(app.view as any);
+  container.appendChild(app.view as any);
 
   const eventPublisher = new EventPublisher();
 

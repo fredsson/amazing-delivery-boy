@@ -4,7 +4,7 @@
   "description": "A Small Game About a Delivery Boy",
   "main": "index.js",
   "scripts": {
-    "dev": "esbuild src/main.ts index.html --bundle --outdir=dist --watch",
+    "dev": "node tools/run.js",
     "build": "esbuild src/main.ts --bundle --outdir=dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

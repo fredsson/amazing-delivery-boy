@@ -18,7 +18,7 @@ export class PlayerView {
   private sprite?: AnimatedSprite;
 
   constructor(private app: Application, eventPublisher: EventPublisher) {
-    Assets.load('assets/bike_boy.json').then(sheet => {
+    Assets.load('assets/gfx/bike_boy.json').then(sheet => {
       if (sheet.data) {
         this.animations = Object.keys(sheet.data.animations).reduce((total, animKey) => {
           const frames = sheet.data.animations[animKey].map((f: string) => Texture.from(f));

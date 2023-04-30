@@ -18,6 +18,10 @@ export class PlayerView {
   private sprite?: AnimatedSprite;
 
   constructor(private app: Application, eventPublisher: EventPublisher) {
+    const center = {
+      x: app.screen.width / 2,
+      y: app.screen.height / 2
+    };
     Assets.load('assets/gfx/bike_boy.json').then(sheet => {
       if (sheet.data) {
         this.animations = Object.keys(sheet.data.animations).reduce((total, animKey) => {
@@ -27,6 +31,8 @@ export class PlayerView {
         }, {} as Record<PlayerAnimation, Texture[]>);
 
         this.sprite = new AnimatedSprite(this.animations['bike_left']);
+        this.sprite.x = center.x;
+        this.sprite.y = center.y;
         app.stage.addChild(this.sprite);
         this.sprite.animationSpeed = 0.2;
 
@@ -36,9 +42,6 @@ export class PlayerView {
           }
 
           this.changeAnimation(this.sprite, event.direction);
-
-          this.sprite.x = event.x;
-          this.sprite.y = event.y;
         });
 
       }

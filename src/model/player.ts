@@ -2,6 +2,8 @@ import { EventPublisher } from "../util/event-publisher";
 
 export type MoveDirection = 'None' | 'Left' | 'Right' | 'Up' | 'Down';
 
+const PLAYER_SPEED = 5;
+
 const DirectionByKey: Record<string, MoveDirection> = {
   w: 'Up',
   s: 'Down',
@@ -43,10 +45,12 @@ export class Player {
   public update(dt: number): void {
     const {dx, dy, direction} = this.movementFromDirectionStack();
 
-    this.position.x += dx * dt;
-    this.position.y += dy * dt;
+    this.position.x += PLAYER_SPEED * dx * dt;
+    this.position.y += PLAYER_SPEED * dy * dt;
 
-    this.eventPublisher.emit<MoveEvent>('PlayerMoved', {...this.position, direction})
+    if (dx !== 0 || dy !== 0) {
+      this.eventPublisher.emit<MoveEvent>('PlayerMoved', {...this.position, direction})
+    }
   }
 
   public destroy() {

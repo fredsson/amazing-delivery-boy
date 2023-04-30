@@ -36,6 +36,11 @@ export class Player {
   private directions: string[] = [];
   private throwStartTime: Date | undefined;
 
+  private previousdelta = {
+    x: 0,
+    y: 0
+  };
+
   constructor(private eventPublisher: EventPublisher) {
     window.addEventListener('keydown', event => {
       this.pushMovementDirection(event.key);
@@ -73,7 +78,14 @@ export class Player {
     this.position.x += Math.round(PLAYER_SPEED * dx * dt);
     this.position.y += Math.round(PLAYER_SPEED * dy * dt);
 
-    if (dx !== 0 || dy !== 0) {
+    const moving = (dx !== 0 || dy !== 0);
+    const stillMoving = (dx !== this.previousdelta.x || dy !== this.previousdelta.y);
+    if (moving || stillMoving) {
+      this.previousdelta = {
+        x: dx,
+        y: dy
+      };
+
       this.eventPublisher.emit<MoveEvent>('PlayerMoved', {...this.position, direction})
     }
   }

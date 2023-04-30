@@ -52,8 +52,8 @@ export class MapView {
         for (let j = 0; j < bikeRoute1.width; j++) {
           const tileType = bikeRoute1.tiles[(i*bikeRoute1.width) + j];
           const tileStartPosition = {
-            x: (j * 512) + ((this.app.screen.width / 2) - bikeRoute1.startPosition.x),
-            y: (i * 512) + ((this.app.screen.height / 2) - bikeRoute1.startPosition.y)
+            x: (j * 512) + (this.app.screen.width / 2),
+            y: (i * 512) + (this.app.screen.height / 2)
           };
           if (tileType === 1) {
             this.tiles.push(new TileView(this.eventPublisher, this.app, tileStartPosition, {

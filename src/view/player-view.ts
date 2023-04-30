@@ -17,12 +17,15 @@ export class PlayerView {
   private currentAnimation: PlayerAnimation | undefined;
   private sprite?: AnimatedSprite;
 
-  constructor(private app: Application, eventPublisher: EventPublisher) {
+  constructor(private app: Application, private eventPublisher: EventPublisher) {
+  }
+
+  public async init(): Promise<void> {
     const center = {
-      x: app.screen.width / 2,
-      y: app.screen.height / 2
+      x: this.app.screen.width / 2,
+      y: this.app.screen.height / 2
     };
-    Assets.load('assets/gfx/bike_boy.json').then(sheet => {
+    return Assets.load('assets/gfx/bike_boy.json').then(sheet => {
       if (sheet.data) {
         this.animations = Object.keys(sheet.data.animations).reduce((total, animKey) => {
           const frames = sheet.data.animations[animKey].map((f: string) => Texture.from(f));
@@ -33,10 +36,10 @@ export class PlayerView {
         this.sprite = new AnimatedSprite(this.animations['bike_left']);
         this.sprite.x = center.x;
         this.sprite.y = center.y;
-        app.stage.addChild(this.sprite);
+        this.app.stage.addChild(this.sprite);
         this.sprite.animationSpeed = 0.2;
 
-        eventPublisher.on<MoveEvent>('PlayerMoved', (event: MoveEvent) => {
+        this.eventPublisher.on<MoveEvent>('PlayerMoved', event => {
           if (!this.sprite) {
             return;
           }

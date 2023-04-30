@@ -15,16 +15,18 @@ async function main() {
 
   const eventPublisher = new EventPublisher();
 
-  const player = new Player(eventPublisher);
-
   const mapView = new MapView(app, eventPublisher);
   mapView.init().then(() => {
     const playerView = new PlayerView(app, eventPublisher);
+    playerView.init().then(() => {
+      const player = new Player(eventPublisher);
+      const ticker = app.ticker.add((dt: number) => {
+        player.update(dt);
+      });
+    });
   });
 
-  const ticker = app.ticker.add((dt: number) => {
-    player.update(dt);
-  });
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {

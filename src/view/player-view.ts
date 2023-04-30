@@ -1,10 +1,11 @@
 import { AnimatedSprite, Application, Assets, Texture } from "pixi.js";
 import { EventPublisher } from "../util/event-publisher";
-import { MoveEvent, MoveDirection } from "../model/player";
+import { MoveEvent } from "../model/player";
+import { Direction } from "../util/commons";
 
 type PlayerAnimation = 'bike_left' | 'bike_right' | 'bike_up' | 'bike_down';
 
-const animationNameByMoveDirection: Record<MoveDirection, PlayerAnimation | undefined>  = {
+const animationNameByMoveDirection: Record<Direction, PlayerAnimation | undefined>  = {
   'Left': 'bike_left',
   'Right': 'bike_right',
   'Up': 'bike_up',
@@ -57,7 +58,7 @@ export class PlayerView {
     }
   }
 
-  private changeAnimation(sprite: AnimatedSprite, direction: MoveDirection) {
+  private changeAnimation(sprite: AnimatedSprite, direction: Direction) {
     const animationToChangeTo = animationNameByMoveDirection[direction];
     if (animationToChangeTo === this.currentAnimation) {
       return;

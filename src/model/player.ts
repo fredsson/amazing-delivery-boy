@@ -1,14 +1,13 @@
 import { EventPublisher } from "../util/event-publisher";
 import * as bikeRoute1 from '../../assets/maps/bike-route1.json';
-
-export type MoveDirection = 'None' | 'Left' | 'Right' | 'Up' | 'Down';
+import { Direction } from "../util/commons";
 
 const PLAYER_SPEED = 5;
 
 const PLAYER_MAX_THROW_CHARGE_IN_SEC = 4;
 const PLAYER_MAX_THROW_DISTANCE_IN_PIXELS = 400;
 
-const DirectionByKey: Record<string, MoveDirection> = {
+const DirectionByKey: Record<string, Direction> = {
   w: 'Up',
   s: 'Down',
   a: 'Left',
@@ -25,7 +24,7 @@ const MovementByKey: Record<string, number[]> = {
 export interface MoveEvent {
   x: number;
   y: number;
-  direction: MoveDirection;
+  direction: Direction;
 }
 
 export class Player {
@@ -97,7 +96,7 @@ export class Player {
     this.directions = this.directions.filter(k => k !== key);
   }
 
-  private movementFromDirectionStack(): {dx: number, dy: number, direction: MoveDirection} {
+  private movementFromDirectionStack(): {dx: number, dy: number, direction: Direction} {
     if (!this.directions.length) {
       return {
         dx: 0,

@@ -45,8 +45,8 @@ export class Player {
   public update(dt: number): void {
     const {dx, dy, direction} = this.movementFromDirectionStack();
 
-    this.position.x += PLAYER_SPEED * dx * dt;
-    this.position.y += PLAYER_SPEED * dy * dt;
+    this.position.x += Math.round(PLAYER_SPEED * dx * dt);
+    this.position.y += Math.round(PLAYER_SPEED * dy * dt);
 
     if (dx !== 0 || dy !== 0) {
       this.eventPublisher.emit<MoveEvent>('PlayerMoved', {...this.position, direction})

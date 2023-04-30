@@ -40,8 +40,11 @@ class TileView {
 
 export class MapView {
   private tiles: TileView[] = [];
-  constructor(app: Application, eventPublisher: EventPublisher) {
-    Promise.all([
+  constructor(private app: Application, private eventPublisher: EventPublisher) {
+  }
+
+  public async init(): Promise<void> {
+    return Promise.all([
       Assets.load('assets/gfx/plots.json'),
       Assets.load('assets/gfx/house_1.png')
     ]).then(([plotSheet, houseTexture]) => {
@@ -49,26 +52,21 @@ export class MapView {
         for (let j = 0; j < bikeRoute1.width; j++) {
           const tileType = bikeRoute1.tiles[(i*bikeRoute1.width) + j];
           const tileStartPosition = {
-            x: (j * 512) + ((app.screen.width / 2) - bikeRoute1.startPosition.x),
-            y: (i * 512) + ((app.screen.height / 2) - bikeRoute1.startPosition.y)
+            x: (j * 512) + ((this.app.screen.width / 2) - bikeRoute1.startPosition.x),
+            y: (i * 512) + ((this.app.screen.height / 2) - bikeRoute1.startPosition.y)
           };
           if (tileType === 1) {
-            this.tiles.push(new TileView(eventPublisher, app, tileStartPosition, {
+            this.tiles.push(new TileView(this.eventPublisher, this.app, tileStartPosition, {
               plot: plotSheet.textures['plots1.png']
             }));
           } else if (tileType === 2) {
-            this.tiles.push(new TileView(eventPublisher, app, tileStartPosition, {
+            this.tiles.push(new TileView(this.eventPublisher, this.app, tileStartPosition, {
               plot: plotSheet.textures['plots0.png'],
               house: houseTexture
             }));
           }
-
-
         }
       }
     });
   }
-
-
-
 }

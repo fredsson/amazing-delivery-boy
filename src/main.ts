@@ -2,6 +2,7 @@ import { Application } from 'pixi.js';
 import { Player } from './model/player';
 import { PlayerView } from './view/player-view';
 import { EventPublisher } from './util/event-publisher';
+import { MapView } from './view/map-view';
 
 async function main() {
   const container = document.querySelector('#app');
@@ -16,9 +17,10 @@ async function main() {
 
   const player = new Player(eventPublisher);
 
-  const playerView = new PlayerView(app, eventPublisher);
   const mapView = new MapView(app, eventPublisher);
-
+  mapView.init().then(() => {
+    const playerView = new PlayerView(app, eventPublisher);
+  });
 
   const ticker = app.ticker.add((dt: number) => {
     player.update(dt);

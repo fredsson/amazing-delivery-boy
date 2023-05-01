@@ -1,6 +1,6 @@
 import { EventPublisher } from "../util/event-publisher";
 import * as bikeRoute1 from '../../assets/maps/bike-route1.json';
-import { Direction } from "../util/commons";
+import { Direction, Vec2 } from "../util/commons";
 
 const PLAYER_SPEED = 5;
 
@@ -29,14 +29,14 @@ export interface MoveEvent {
 
 export class Player {
   private abort = new AbortController();
-  private position = {
+  private position: Vec2 = {
     x: bikeRoute1.startPosition.x,
     y: bikeRoute1.startPosition.y
   };
   private directions: string[] = [];
   private throwStartTime: Date | undefined;
 
-  private previousdelta = {
+  private previousdelta: Vec2 = {
     x: 0,
     y: 0
   };

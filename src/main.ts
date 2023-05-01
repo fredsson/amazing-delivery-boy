@@ -1,8 +1,9 @@
 import { Application } from 'pixi.js';
-import { MoveEvent, Player } from './model/player';
+import { MoveEvent, Player, PlayerThrowPaperEvent } from './model/player';
 import { PlayerView } from './view/player-view';
 import { EventPublisher } from './util/event-publisher';
 import { MapView } from './view/map-view';
+import { PaperView } from './view/paper-view';
 import { CenteredCamera } from './util/camera';
 import * as bikeRoute1 from '../assets/maps/bike-route1.json';
 
@@ -30,6 +31,12 @@ async function main() {
       const player = new Player(eventPublisher);
       const ticker = app.ticker.add((dt: number) => {
         player.update(dt);
+      });
+
+      eventPublisher.on<PlayerThrowPaperEvent>('PlayerThrowPaper', event => {
+        const paperView = new PaperView(app, eventPublisher, {x: event.x, y: event.y});
+        paperView.init(camera);
+        papers.push(paperView);
       });
     });
   });

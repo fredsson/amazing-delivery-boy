@@ -14,6 +14,14 @@ const DirectionByKey: Record<string, Direction> = {
   d: 'Right'
 };
 
+const ThrowDirectionByDirection: Record<Direction, Direction> = {
+  Up: 'Left',
+  Down: 'Right',
+  Left: 'Down',
+  Right: 'Up',
+  None: 'None',
+}
+
 const MovementByKey: Record<string, number[]> = {
   w: [0, -1],
   a: [-1, 0],
@@ -27,6 +35,13 @@ export interface MoveEvent {
   direction: Direction;
 }
 
+export interface PlayerThrowPaperEvent {
+  x: number;
+  y: number;
+  distance: number;
+  direction: Direction;
+}
+
 export class Player {
   private abort = new AbortController();
   private position: Vec2 = {
@@ -34,6 +49,7 @@ export class Player {
     y: bikeRoute1.startPosition.y
   };
   private directions: string[] = [];
+  private currentDirection: Direction = 'Right';
   private throwStartTime: Date | undefined;
 
   private previousdelta: Vec2 = {
@@ -59,16 +75,17 @@ export class Player {
         const strengh = Math.min(differenceInSec / PLAYER_MAX_THROW_CHARGE_IN_SEC, 1);
         const distance = strengh * PLAYER_MAX_THROW_DISTANCE_IN_PIXELS;
 
-        this.eventPublisher.emit('PlayerThrowPaper', {
+        this.eventPublisher.emit<PlayerThrowPaperEvent>('PlayerThrowPaper', {
           ...this.position,
-          distance
-        })
+          distance,
+          direction: ThrowDirectionByDirection[this.currentDirection]
+        });
       }
     }, {signal: this.abort.signal});
 
     eventPublisher.emit<MoveEvent>('PlayerMoved', {
       ...this.position,
-      direction: 'Right',
+      direction: this.currentDirection,
     });
   }
 
@@ -85,6 +102,10 @@ export class Player {
         x: dx,
         y: dy
       };
+
+      if (direction !== 'None') {
+        this.currentDirection = direction;
+      }
 
       this.eventPublisher.emit<MoveEvent>('PlayerMoved', {...this.position, direction})
     }
